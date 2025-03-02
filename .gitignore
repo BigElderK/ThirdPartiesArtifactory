@@ -1,5 +1,6 @@
 *
-!/conan/*/conanfile.py
+!**/conanfile.py
+!/conan/msvc/conanfile.py
 !/conan/*.txt
 !/.gitignore
 !/README.txt
