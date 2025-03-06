@@ -2,11 +2,11 @@ import logging
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps, cmake_layout
 from conan.tools.scm import Git
-from conan.tools.files import rmdir
+from conan.tools.files import rmdir, copy
 import os
 
 class LlvmConan(ConanFile):
-    name = "llvm"
+    name = "llvm_toolchain"
     version = "19.1.7"
     #license = "<Put the package license here>"
     #author = "<Put your name here> <And your email here>"
@@ -14,10 +14,11 @@ class LlvmConan(ConanFile):
     #description = "<Description of Llvm here>"
     topics = ("llvm", "clang")
     settings = "os", "compiler", "build_type", "arch"
-    default_user = "kplanb"
-    default_channel = "default"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+
+    options = {"fPIC": [True, False]}
+    default_options = {"fPIC": True}
+
+    package_type = "application"
 
     def source(self):
         self.run("git clone https://github.com/llvm/llvm-project.git  --branch llvmorg-%s --depth=1" % (self.version)) 
@@ -59,9 +60,6 @@ class LlvmConan(ConanFile):
 
         # https://github.com/llvm/llvm-project/issues/55629
         tc.cache_variables["LIBUNWIND_LINK_FLAGS"] ="-ldl -lpthread"
-
-        tc.generator = "Ninja"
-
         tc.generate()
 
     def build(self):
@@ -70,12 +68,20 @@ class LlvmConan(ConanFile):
         cmake.build()
 
     def package(self):
-        cmake = CMake(self)
-        cmake.install()
+        # cmake = CMake(self)
+        #cmake.install()
+        copy(self, "*", src=os.path.join(self.build_folder, "bin"), dst=os.path.join(self.package_folder, "bin"))
+        copy(self, "*", src=os.path.join(self.build_folder, "lib"), dst=os.path.join(self.package_folder, "lib"))
+
+    def package_id(self):
+        del self.info.settings.compiler
 
     def package_info(self):
-        self.cpp_info.includedirs = ['include']
-        self.cpp_info.libdirs = ['lib']
+        #self.cpp_info.includedirs = ['include']
+        #self.cpp_info.libdirs = ['lib']
+
+        #self.cpp_info.includedirs = []
+        #self.cpp_info.libdirs = []
 
         self.cpp_info.bindirs = ['bin']
 

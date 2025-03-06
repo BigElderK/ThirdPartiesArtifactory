@@ -7,7 +7,8 @@ conan source .
 conan install .
 
 # Step 3: Build
-conan build . profile=../conan_windows_profile.txt
+conan build . --profile:build=../conan_linux_build_profile.txt --profile:host=../conan_linux_host_profile.txt
+conan build . --profile:build=../conan_windows_build_profile.txt --profile:host=../conan_windows_host_profile.txt
 
 # Step 4: Export to cache
 conan export-pkg .

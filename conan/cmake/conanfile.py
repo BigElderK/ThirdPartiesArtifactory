@@ -9,17 +9,17 @@ class CMakeBinConan(ConanFile):
     name = "cmake"
     version = "3.31.6"
     topics = ("cmake", "build", "installer")
-    package_type = "application"
     settings = "os", "arch", "build_type"
+
+    package_type = "application"
     
-    default_user = "kplanb"
-    default_channel = "default"
+    # default_user = "bigelderk"
+    # default_channel = "default"
 
     def layout(self):
-        cmake_layout(self, src_folder="./source", build_folder="./build")
+        cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
 
     def source(self):
-        rmdir(self, "CMake")
         self.run("git clone https://github.com/Kitware/CMake.git --branch v%s --depth=1" % (self.version)) 
         
     def generate(self):
@@ -37,10 +37,11 @@ class CMakeBinConan(ConanFile):
         cmake = CMake(self)
         cmake.install()
 
-    def package_id(self):
-        del self.info.settings.build_type
-
     def package_info(self):
-        self.runenv_info.append_path("PATH", os.path.join(self.package_folder, "bin"))
-        self.buildenv_info.append_path("PATH", os.path.join(self.package_folder, "bin"))
+        self.cpp_info.includedirs = []
+        self.cpp_info.libdirs = []
+
+        #self.runenv_info.append_path(os.path.join(self.package_folder, "bin"))
+        #self.runenv_info.append_path("PATH", os.path.join(self.package_folder, "bin"))
+        #self.buildenv_info.append_path("PATH", os.path.join(self.package_folder, "bin"))
         return
