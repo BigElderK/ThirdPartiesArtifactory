@@ -5,14 +5,17 @@ from conan.tools.scm import Git
 from conan.tools.files import rmdir
 import os
 
-class NinjaBinConan(ConanFile):
-    name = "ninja"
-    version = "1.12.1"
-    topics = ("ninja", "build", "installer")
-    settings = "os", "arch", "build_type"
+class BoostConan(ConanFile):
+    name = "boost"
+    version = "1.87.0"
+    topics = ("cmake", "build", "installer")
+    settings = "os", "compiler", "build_type", "arch"
 
-    package_type = "application"
+    package_type = "library"
     
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
+
     # default_user = "bigelderk"
     # default_channel = "default"
 
@@ -20,9 +23,10 @@ class NinjaBinConan(ConanFile):
         cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
 
     def source(self):
-        self.run("git clone https://github.com/ninja-build/ninja.git --branch v%s --depth=1" % (self.version)) 
+        self.run("git clone https://github.com/boostorg/boost.git --recurse-submodules --branch boost-%s --depth=1" % (self.version)) 
         
     def generate(self):
+        print(os.environ)
         tc = CMakeToolchain(self)
         tc.cache_variables["CMAKE_USE_OPENSSL"] = "OFF"
         tc.cache_variables["BUILD_TESTING"] = "OFF"
@@ -30,7 +34,7 @@ class NinjaBinConan(ConanFile):
     
     def build(self):
         cmake = CMake(self)
-        cmake.configure(build_script_folder="./ninja")
+        cmake.configure(build_script_folder="./boost")
         cmake.build()
 
     def package(self):
@@ -38,12 +42,8 @@ class NinjaBinConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.includedirs = []
-        self.cpp_info.libdirs = []
-
-        #self.cpp_info.bindirs = ['bin']
-        #self.runenv_info.prepend_path("PATH", os.path.join(self.package_folder, "bin"))
-        #self.buildenv_info.prepend_path("PATH", os.path.join(self.package_folder, "bin"))
+        self.cpp_info.libdirs = ['lib']
+        self.cpp_info.includedirs = ['include']
 
         #self.runenv_info.append_path(os.path.join(self.package_folder, "bin"))
         #self.runenv_info.append_path("PATH", os.path.join(self.package_folder, "bin"))

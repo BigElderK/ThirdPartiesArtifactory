@@ -14,8 +14,7 @@ class LlvmConan(ConanFile):
     #description = "<Description of Llvm here>"
     topics = ("llvm", "clang")
     settings = "os", "compiler", "build_type", "arch"
-    default_user = "kplanb"
-    default_channel = "default"
+    
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
 
@@ -76,7 +75,6 @@ class LlvmConan(ConanFile):
     def package_info(self):
         self.cpp_info.includedirs = ['include']
         self.cpp_info.libdirs = ['lib']
-
         self.cpp_info.bindirs = ['bin']
 
         self.runenv_info.define("CC", os.path.join(self.package_folder, "bin", "clang"))

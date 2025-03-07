@@ -7,8 +7,8 @@ conan source .
 conan install .
 
 # Step 3: Build
-conan build . --profile:build=../conan_linux_build_profile.txt --profile:host=../conan_linux_host_profile.txt
-conan build . --profile:build=../conan_windows_build_profile.txt --profile:host=../conan_windows_host_profile.txt
+conan build . --profile=../conan_linux_profile.txt 
+conan build . --profile=../conan_windows_profile.txt 
 
 # Step 4: Export to cache
 conan export-pkg .
@@ -18,3 +18,6 @@ conan list
 
 # Step 6: Upload to remote repo
 conan upload "*" -r=divineland
+
+# Issues
+- When meet timeout when upload, add "core.net.http:timeout = 600000" to global.conf under ~/.conan2/

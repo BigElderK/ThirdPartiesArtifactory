@@ -34,6 +34,7 @@ class LlvmConan(ConanFile):
         tc.cache_variables["LLVM_ENABLE_RUNTIMES"] = "libc;libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp;offload"
 
         # tc.cache_variables["LLVM_USE_LINKER"] = "lld"
+        # tc.cache_variables["LLVM_ENABLE_LIBCXX"] = True
 
         # tc.cache_variables["LLVM_LIBDIR_SUFFIX"] = "64"
         # tc.cache_variables["LLVM_TARGETS_TO_BUILD"] = "X86"
@@ -68,20 +69,17 @@ class LlvmConan(ConanFile):
         cmake.build()
 
     def package(self):
-        # cmake = CMake(self)
-        #cmake.install()
-        copy(self, "*", src=os.path.join(self.build_folder, "bin"), dst=os.path.join(self.package_folder, "bin"))
-        copy(self, "*", src=os.path.join(self.build_folder, "lib"), dst=os.path.join(self.package_folder, "lib"))
+        cmake = CMake(self)
+        cmake.install()
+        #copy(self, "*", src=os.path.join(self.build_folder, "bin"), dst=os.path.join(self.package_folder, "bin"))
+        #copy(self, "*", src=os.path.join(self.build_folder, "lib"), dst=os.path.join(self.package_folder, "lib"))
 
     def package_id(self):
         del self.info.settings.compiler
 
     def package_info(self):
-        #self.cpp_info.includedirs = ['include']
-        #self.cpp_info.libdirs = ['lib']
-
-        #self.cpp_info.includedirs = []
-        #self.cpp_info.libdirs = []
+        self.cpp_info.includedirs = ['include']
+        self.cpp_info.libdirs = ['lib']
 
         self.cpp_info.bindirs = ['bin']
 
