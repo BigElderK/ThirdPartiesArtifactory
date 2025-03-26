@@ -26,10 +26,9 @@ class BoostConan(ConanFile):
         self.run("git clone https://github.com/boostorg/boost.git --recurse-submodules --branch boost-%s --depth=1" % (self.version)) 
         
     def generate(self):
-        print(os.environ)
         tc = CMakeToolchain(self)
-        tc.cache_variables["CMAKE_USE_OPENSSL"] = "OFF"
-        tc.cache_variables["BUILD_TESTING"] = "OFF"
+        tc.cache_variables["CMAKE_USE_OPENSSL"] = False
+        tc.cache_variables["BUILD_TESTING"] = True
         tc.generate()
     
     def build(self):
