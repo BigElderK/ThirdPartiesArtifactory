@@ -25,8 +25,8 @@ class LlvmConan(ConanFile):
         self.run("git clone https://github.com/llvm/llvm-project.git  --branch llvmorg-%s --depth=1" % (self.version)) 
 
     def layout(self):
-        #cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch), "stage2"))
-        cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
+        cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch), "stage2"))
+        #cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
 
     def generate(self):
         #clang_package = self.dependencies["llvm_toolchain"]
@@ -108,13 +108,13 @@ class LlvmConan(ConanFile):
         cmake = CMake(self)
 
         # Copy the folder
-        shutil.copytree(
-            os.path.join(self.build_folder, "tools", "clang", "stage2-bins"), 
-            os.path.join(self.build_folder, "..", "..", "..", str(self.settings.os), str(self.settings.arch), "stage2", str(self.settings.build_type))
-        )
+        #shutil.copytree(
+        #    os.path.join(self.build_folder, "tools", "clang", "stage2-bins"), 
+        #    os.path.join(self.build_folder, "..", "..", "..", str(self.settings.os), str(self.settings.arch), "stage2", str(self.settings.build_type))
+        #)
 
         # When meet "cmake not found", run this line in layout
-        cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch), "stage2"))
+        #cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch), "stage2"))
         cmake.install()
 
     def package_id(self):

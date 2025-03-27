@@ -1,40 +1,41 @@
 #https://docs.conan.io/2/reference/config_files/settings.html
 
-{% set os = "Linux" %}
-{% set arch = "x86_64" %}
-{% set llvm_version = "19" %}
-{% set target = "x86_64-linux-gnu" %}
-
-{% set sysroot = "E:/BigElderK/wsl/sysroot-ubuntu-24_10" %}
-
 [settings]
-os={{os}}
-arch={{arch}}
+os=Linux
+arch=x86_64
 
 compiler=clang
-compiler.version={{llvm_version}}
+compiler.version=19
 compiler.libcxx=libc++
 compiler.cppstd=gnu17
 build_type=Release
+
+{% set target = "x86_64-linux-gnu" %}
 
 [tool_requires]
 ninja/1.12.1
 cmake/3.31.6
 llvm/20.1.1
-msys2/cci.latest
+
+# If Cross-Compile on windows, add sysroot
+{% if detect_api.detect_os() == "Windows" %}
+ubuntu_sysroot/24.10
+{% endif %}
 
 [conf]
-tools.build:sysroot="{{sysroot}}"
-
 tools.cmake.cmaketoolchain:generator=Ninja
 tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
 tools.build:exelinkflags=+["-fuse-ld=lld"]
 tools.build:sharedlinkflags=+["-fuse-ld=lld"]
-tools.build:cxxflags=+["--target={{target}}"]
-tools.build:cflags=+["--target={{target}}"]
 
-tools.build:cxxflags=+["-I{{sysroot}}/usr/lib/llvm-{{llvm_version}}/include"]
+# If Cross-Compile on windows
+{% if detect_api.detect_os() == "Windows" %}
 tools.build:cxxflags=+["-Wno-invalid-specialization"]
+
+tools.build:cxxflags=+["--target=x86_64-linux-gnu"]
+tools.build:cflags=+["--target=x86_64-linux-gnu"]
+{% endif %}
+
 
 # For Debug
 #tools.cmake.cmaketoolchain:extra_variables={"CMAKE_VERBOSE_MAKEFILE": "True"}
