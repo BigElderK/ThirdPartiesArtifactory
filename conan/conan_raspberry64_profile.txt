@@ -1,0 +1,36 @@
+#https://docs.conan.io/2/reference/config_files/settings.html
+
+[settings]
+os=Linux
+arch=armv8
+
+compiler=clang
+compiler.version=19
+compiler.cppstd=gnu17
+build_type=Release
+
+[tool_requires]
+ninja/1.12.1
+cmake/3.31.6
+llvm/20.1.1
+raspberry64_sysroot/12.2.0
+
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
+tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "aarch64-linux-gnu", "CMAKE_CXX_COMPILER_TARGET":  "aarch64-linux-gnu", "CMAKE_C_COMPILER_TARGET": "aarch64-linux-gnu", "CMAKE_ASM_COMPILER_TARGET":"aarch64-linux-gnu", "CMAKE_LINKER_TYPE": "LLD"}
+
+tools.build:cxxflags=+["-Wno-invalid-specialization"]
+
+# For Debug
+tools.build:cxxflags=+["-v"]
+
+[buildenv]
+#CC=clang
+#CXX=clang++
+#LDFLAGS=-fuse-ld=lld -static-libstdc++ -lc++abi -lunwind
+#LDFLAGS=-lc++abi -lunwind
+
+[options]
+*:shared=False
+*:fPIC=True

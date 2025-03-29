@@ -10,36 +10,22 @@ compiler.libcxx=libc++
 compiler.cppstd=gnu17
 build_type=Release
 
-{% set target = "x86_64-linux-gnu" %}
-
 [tool_requires]
 ninja/1.12.1
 cmake/3.31.6
 llvm/20.1.1
-
-# If Cross-Compile on windows, add sysroot
-{% if detect_api.detect_os() == "Windows" %}
 ubuntu_sysroot/24.10
-{% endif %}
 
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
 tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
-tools.build:exelinkflags=+["-fuse-ld=lld"]
-tools.build:sharedlinkflags=+["-fuse-ld=lld"]
+tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "x86_64-linux-gnu", "CMAKE_CXX_COMPILER_TARGET":  "x86_64-linux-gnu", "CMAKE_C_COMPILER_TARGET": "x86_64-linux-gnu", "CMAKE_ASM_COMPILER_TARGET":"x86_64-linux-gnu", "CMAKE_LINKER_TYPE": "LLD"}
 
-# If Cross-Compile on windows
-{% if detect_api.detect_os() == "Windows" %}
 tools.build:cxxflags=+["-Wno-invalid-specialization"]
-
-tools.build:cxxflags=+["--target=x86_64-linux-gnu"]
-tools.build:cflags=+["--target=x86_64-linux-gnu"]
-{% endif %}
-
 
 # For Debug
 #tools.cmake.cmaketoolchain:extra_variables={"CMAKE_VERBOSE_MAKEFILE": "True"}
-#tools.build:cxxflags=+["-Wno-invalid-specialization", "-v"]
+#tools.build:cxxflags=+["-v"]
 
 [buildenv]
 #CC=clang

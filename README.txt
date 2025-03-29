@@ -38,5 +38,8 @@ docker export sysroot-ubuntu-22_04 -o E:\BigElderK\wsl\sysroot-ubuntu-22_04.tar
 clang++ --target=x86_64-linux-gnu -o test test.cpp -fuse-ld=lld -std=c++17 -stdlib=libc++ --sysroot=/home/k/ttt/sysroot-ubuntu-amd64-stable -v
 
 E:\BigElderK\.conan\p\b\llvmdf2f067e920ff\p\bin\clang++.exe --target=x86_64-pc-linux-gnu -o test test.cpp -fuse-ld=lld -std=c++17 -stdlib=libc++ --sysroot=E:/BigElderK/wsl/sysroot-ubuntu-amd64-stable -v -L/lib/x86_64-linux-gnu "E:/BigElderK/wsl/sysroot-ubuntu-amd64-stable/lib/llvm-14/lib/libc++.a"
+E:/BigElderK/.conan/p/b/llvmea1e3c170e804/p/bin/clang++.exe --target=aarch64-linux-gnu -o test test.cpp --sysroot=E:\BigElderK\ThirdPartiesArtifactory\conan\raspberry64_build_tools\build\aarch64-linux-gnu\sysroot -I"E:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_build_tools/build/aarch64-linux-gnu/sysroot/usr/include/c++/12" -fuse-ld=lld -std=c++17 -stdlib=libc++ -v
 
+
+E:/BigElderK/.conan/p/b/llvmea1e3c170e804/p/bin/clang++.exe --target=aarch64-linux-gnu -o test test.cpp --sysroot=E:\BigElderK\ThirdPartiesArtifactory\conan\raspberry64_build_tools\build\aarch64-linux-gnu\sysroot -I"E:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_build_tools/build/aarch64-linux-gnu/include/c++/12" -fuse-ld=lld -std=c++17 -v
 
