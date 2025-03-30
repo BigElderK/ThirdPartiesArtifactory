@@ -23,7 +23,7 @@ tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "aarch64-linux-gnu"
 tools.build:cxxflags=+["-Wno-invalid-specialization"]
 
 # For Debug
-tools.build:cxxflags=+["-v"]
+# tools.build:cxxflags=+["-v"]
 
 [buildenv]
 #CC=clang
