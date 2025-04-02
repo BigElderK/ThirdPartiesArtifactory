@@ -12,7 +12,7 @@ import glob
 class SysRootBinConan(ConanFile):
     name = "ubuntu_sysroot"
     version = "24.10"
-    topics = ("ninja", "build", "installer")
+    topics = ("sysroot", "build", "installer")
     settings = "arch"
 
     # package_type = "application"
@@ -74,6 +74,9 @@ class SysRootBinConan(ConanFile):
         # for ld-linux-x86-64.so.2
         rm(self, "ld-linux-x86-64.so.2", os.path.join(self.package_folder, self.system_name, "sysroot", "lib64"))
         copy(self, "ld-linux-x86-64.so.2", src=os.path.join(self.output_sysroot_folder, "usr", "lib", "x86_64-linux-gnu"), dst=os.path.join(self.package_folder, self.system_name, "sysroot", "lib64"), keep_path=False, overwrite_equal=True)
+
+        rm(self, "clang", os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "bin"))
+        rm(self, "clang++", os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "bin"))
 
         return
 

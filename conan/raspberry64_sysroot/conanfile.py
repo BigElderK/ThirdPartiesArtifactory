@@ -12,7 +12,7 @@ import glob
 class SysRootBinConan(ConanFile):
     name = "raspberry64_sysroot"
     version = "12.2.0"
-    topics = ("ninja", "build", "installer")
+    topics = ("sysroot", "build", "installer")
 
     # package_type = "application"
     
@@ -45,6 +45,6 @@ class SysRootBinConan(ConanFile):
         self.cpp_info.libdirs = [os.path.join(self.package_folder, self.system_name, "lib")]
 
         self.conf_info.define_path("tools.build:sysroot", os.path.join(self.package_folder, self.system_name, "sysroot"))
-        self.conf_info.append("tools.build:cxxflags", f"-I{os.path.join(self.package_folder, self.system_name, "include", "c++", "12")}".replace('\\', '/'))
+        self.conf_info.append("tools.build:cxxflags", "-I" + os.path.join(self.package_folder, self.system_name, "include", "c++", "12").replace('\\', '/'))
 
         return

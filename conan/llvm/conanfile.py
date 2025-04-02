@@ -19,14 +19,14 @@ class LlvmConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
 
-    requires = {"zlib/1.3.1", "libxml2/2.13.6", "libiconv/1.17"}
+    # requires = {"zlib/1.3.1", "libxml2/2.13.6", "libiconv/1.17"}
 
     def source(self):
         self.run("git clone https://github.com/llvm/llvm-project.git  --branch llvmorg-%s --depth=1" % (self.version)) 
 
     def layout(self):
-        cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch), "stage2"))
-        #cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
+        #cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch), "stage2"))
+        cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
 
     def generate(self):
         #clang_package = self.dependencies["llvm_toolchain"]
@@ -43,8 +43,9 @@ class LlvmConan(ConanFile):
 
         # More configrations could be found in https://llvm.org/docs/CMake.html
         # https://github.com/owent/bash-shell/blob/main/LLVM%26Clang%20Installer/19.1/README.md
+
+        tc.cache_variables["CLANG_ENABLE_BOOTSTRAP"] = False
         if self.settings.os == "Linux":
-            tc.cache_variables["CLANG_ENABLE_BOOTSTRAP"] = True
             tc.cache_variables["LLVM_ENABLE_PROJECTS"] = "bolt;clang;clang-tools-extra;lld;llvm;lldb;libclc;polly;pstl"
             tc.cache_variables["LLVM_ENABLE_RUNTIMES"] = "compiler-rt;libcxx;libcxxabi;libunwind"
 
@@ -64,9 +65,7 @@ class LlvmConan(ConanFile):
             tc.cache_variables["LIBUNWIND_LINK_FLAGS"] ="-ldl -lpthread"
 
         if self.settings.os == "Windows":
-            tc.cache_variables["CMAKE_OBJECT_PATH_MAX"] = 1024
-            tc.cache_variables["CLANG_ENABLE_BOOTSTRAP"] = True
-            tc.cache_variables["LLVM_ENABLE_PROJECTS"] = "bolt;clang;clang-tools-extra;lld;llvm;lldb;polly;pstl"
+            tc.cache_variables["LLVM_ENABLE_PROJECTS"] = "clang;clang-tools-extra;lld;llvm;lldb;polly;pstl"
             tc.cache_variables["LLVM_ENABLE_RUNTIMES"] = "compiler-rt;libcxx"
 
             #tc.cache_variables["LLVM_ENABLE_INCREMENTAL_LINK"] = False
@@ -102,7 +101,7 @@ class LlvmConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.configure(build_script_folder="./llvm-project/llvm")
-        cmake.build(target="stage2")
+        cmake.build()
 
     def package(self):
         cmake = CMake(self)
@@ -119,6 +118,7 @@ class LlvmConan(ConanFile):
 
     def package_id(self):
         del self.info.settings.compiler
+        del self.info.settings.build_type
 
     def package_info(self):
         self.cpp_info.includedirs = ['include']

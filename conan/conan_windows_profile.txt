@@ -9,21 +9,32 @@ compiler.version=20
 compiler.cppstd=17
 #compiler.libcxx=libc++
 compiler.runtime_version=v144
-compiler.runtime=static
-
+compiler.runtime=dynamic
 
 [tool_requires]
 ninja/1.12.1
 cmake/3.31.6
 llvm/20.1.1
+msvc/14.43.34808_x86_64
+windows_sdk/10.0.26100.0_x86_64
 
 [conf]
-tools.build:compiler_executables={'c': 'clang', 'cpp': 'clang++', "ld": "lld"}
-tools.cmake.cmaketoolchain:generator=Ninja
+tools.build:compiler_executables={'c': 'clang', 'cpp': 'clang++'}
 tools.build:jobs=8
-#tools.cmake.cmaketoolchain:extra_variables={'CMAKE_OBJECT_PATH_MAX': '1024', 'CMAKE_VERBOSE_MAKEFILE':'True'}
-# tools.build:cxxflags=["-Wno-error"]
-# tools.build:cxxflags=["-Xclang -stdlib=libc++", "-Wno-error=unused-command-line-argument"]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "x86_64-windows-msvc", "CMAKE_CXX_COMPILER_TARGET":  "x86_64-windows-msvc", "CMAKE_C_COMPILER_TARGET": "x86_64-windows-msvc", "CMAKE_ASM_COMPILER_TARGET":"x86_64-windows-msvc", "CMAKE_LINKER_TYPE": "LLD"}
+
+tools.build:cxxflags=+["-Wno-pragma-pack", "-Wno-microsoft-cpp-macro", "-DWIN32_LEAN_AND_MEAN", "-D_CRT_SECURE_NO_WARNINGS", "-D_WIN32_WINNT=0x0601", "-Wno-gnu-anonymous-struct", "-Wno-language-extension-token"]
+
+#tools.microsoft.msbuild:installation_path=X:/conan/msvc/build/2022/Community
+#tools.microsoft.msbuild:vs_version=17
+#tools.microsoft:winsdk_version=10.0.26100.0
+
+# For Debug
+#tools.cmake.cmaketoolchain:extra_variables={"CMAKE_VERBOSE_MAKEFILE": "True"}
+#tools.build:cxxflags=+["-v"]
+
+[buildenv]
 
 [options]
 *:shared=False

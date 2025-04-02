@@ -25,7 +25,7 @@ tools.build:cxxflags=+["-Wno-invalid-specialization"]
 
 # For Debug
 #tools.cmake.cmaketoolchain:extra_variables={"CMAKE_VERBOSE_MAKEFILE": "True"}
-#tools.build:cxxflags=+["-v"]
+tools.build:cxxflags=+["-v"]
 
 [buildenv]
 #CC=clang
