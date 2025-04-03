@@ -40,6 +40,7 @@ class WindowsSDKConan(ConanFile):
         copy(self, "*", src=os.path.join(self.windows_sdk_install_root_folder, "redist", self.version_number), dst=os.path.join(self.windows_sdk_package_root_folder, "redist", self.version_number), keep_path=True)
 
         # Then rename .Lib to .lib in the package folder
+        """
         package_lib_dir = os.path.join(self.windows_sdk_package_root_folder, "lib", self.version_number)
         if os.path.exists(package_lib_dir):
             for root, _, files in os.walk(package_lib_dir):
@@ -49,6 +50,8 @@ class WindowsSDKConan(ConanFile):
                         new_path = os.path.join(root, file[:-4] + ".lib")
                         rename(self, old_path, new_path+".bak")
                         rename(self, new_path+".bak", new_path)
+        ]]
+        """
         return
 
     def package_info(self):

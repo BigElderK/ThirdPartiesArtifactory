@@ -1,7 +1,7 @@
 https://docs.conan.io/2/tutorial/developing_packages/local_package_development_flow.html
 
 # Step 0: add remote
-
+conan remote add divineland https://divineland.asuscomm.com:10030/artifactory/api/conan/3rd_parties
 
 # Step 1: Prepare sources
 conan source .
@@ -26,6 +26,7 @@ conan upload "*" -r=divineland
 # Issues
 - When meet timeout when upload, add "core.net.http:timeout = 600000" to global.conf under ~/.conan2/
 - clean useless cache using "conan cache clean"
+- On linux, the folder in ext4 disk is case_sensitive while fat32 not, so have to use /mnt folder
 
 # Test
 E:\BigElderK\.conan\p\b\llvmdf2f067e920ff\p\bin\clang++.exe -isystem "E:\BigElderK\.conan\p\b\llvmdf2f067e920ff\p\include\c++\v1" -L"E:\BigElderK\.conan\p\b\llvmdf2f067e920ff\p\lib" -llibc++ -stdlib=libc++ -o test.o -c test.cpp -Xclang --dependent-lib=libcpmt
