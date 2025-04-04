@@ -23,11 +23,13 @@ tools.build:jobs=8
 tools.cmake.cmaketoolchain:generator=Ninja
 
 #tools.microsoft.msbuild:installation_path=X:/conan/msvc/build/2022/Community
-tools.build:compiler_executables={'c': 'clang', 'cpp': 'clang++'}
 tools.microsoft.msbuild:vs_version=17
 tools.microsoft:winsdk_version=10.0.26100.0
+
+tools.build:compiler_executables={'c': 'clang', 'cpp': 'clang++'}
 tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "x86_64-windows-msvc", "CMAKE_CXX_COMPILER_TARGET":  "x86_64-windows-msvc", "CMAKE_C_COMPILER_TARGET": "x86_64-windows-msvc", "CMAKE_ASM_COMPILER_TARGET":"x86_64-windows-msvc", "CMAKE_LINKER_TYPE": "LLD"}
 
+tools.build:cxxflags=+["-DWIN32_LEAN_AND_MEAN", "-D_WIN32_WINNT=0x0601", "-D_CRT_SECURE_NO_WARNINGS", "-Wno-microsoft-cpp-macro", "-Wno-gnu-anonymous-struct", "-Wno-language-extension-token"]
 
 # For Debug
 #tools.build:cxxflags=+["-v"]
