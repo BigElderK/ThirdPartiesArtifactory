@@ -19,6 +19,9 @@ class LlvmConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
 
+    default_user = "arieo"
+    default_channel = "dev"
+
     # requires = {"zlib/1.3.1", "libxml2/2.13.6", "libiconv/1.17"}
 
     def source(self):

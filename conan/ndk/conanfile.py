@@ -16,7 +16,7 @@ class SysRootBinConan(ConanFile):
 
     default_user = "arieo"
     default_channel = "dev"
-    
+
     def layout(self):
         self.output_folder = "./build/android-ndk-r27c"
         return
@@ -30,10 +30,11 @@ class SysRootBinConan(ConanFile):
         return
 
     def package(self):
-        
+        copy(self, "*", src=os.path.join(self.output_folder), dst=os.path.join(self.package_folder, "android-ndk-r27c"), keep_path=True)
         return
 
     def package_info(self):
         self.cpp_info.includedirs = []
         self.cpp_info.libdirs = []
+        self.conf_info.define_path("tools.android:ndk_path", os.path.join(self.package_folder, "android-ndk-r27c"))
         return

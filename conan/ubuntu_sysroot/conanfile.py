@@ -14,11 +14,9 @@ class SysRootBinConan(ConanFile):
     version = "24.10"
     topics = ("sysroot", "build", "installer")
     settings = "arch"
-
-    # package_type = "application"
     
-    # default_user = "bigelderk"
-    # default_channel = "default"
+    default_user = "arieo"
+    default_channel = "dev"
 
     def layout(self):
         self.system_name = f"ubuntu-{self.version}-{self.settings.arch}"
@@ -88,7 +86,7 @@ class SysRootBinConan(ConanFile):
             for file in files:
                 if file == "cxxabi.h":
                     if root.find('llvm') != -1 and root.find('v1') == -1:
-                        print("found cxxabi.h in ", os.path.relpath(os.path.join(root, file), (self.output_sysroot_folder)))
+                        #print("found cxxabi.h in ", os.path.relpath(os.path.join(root, file), (self.output_sysroot_folder)))
                         self.cxxabi_h_folder = os.path.join(root)
 
         self.conf_info.define_path("tools.build:sysroot", os.path.join(self.package_folder, self.system_name, "sysroot"))
@@ -98,7 +96,7 @@ class SysRootBinConan(ConanFile):
             for file in files:
                 if file == "libc++.so":
                     if root.find('llvm') != -1:
-                        print("found libc++.so in ", os.path.relpath(os.path.join(root, file), (self.output_sysroot_folder)))
+                        #print("found libc++.so in ", os.path.relpath(os.path.join(root, file), (self.output_sysroot_folder)))
                         self.libcxx_folder = os.path.join(root)
 
         self.conf_info.append("tools.build:exelinkflags", f"-L{self.libcxx_folder}".replace('\\', '/'))

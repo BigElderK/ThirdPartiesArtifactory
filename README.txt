@@ -14,8 +14,8 @@ conan build . --profile=../conan_linux_profile.txt
 conan build . --profile=../conan_windows_profile.txt 
 
 # Step 4: Export to cache
-conan export-pkg . --profile=../conan_linux_profile.txt 
-conan export-pkg . --profile=../conan_windows_profile.txt 
+conan export-pkg . --profile=../conan_linux_profile.txt --user=arieo --channel=dev
+conan export-pkg . --profile=../conan_windows_profile.txt --user=arieo --channel=dev
 
 # Step 5: Check local conan cache
 conan list

@@ -16,8 +16,8 @@ class SysRootBinConan(ConanFile):
 
     # package_type = "application"
     
-    # default_user = "bigelderk"
-    # default_channel = "default"
+    default_user = "arieo"
+    default_channel = "dev"
 
     def layout(self):
         self.system_name = f"raspberray64-armv8"
