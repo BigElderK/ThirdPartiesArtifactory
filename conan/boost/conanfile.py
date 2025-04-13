@@ -16,6 +16,7 @@ class BoostConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
 
+    #requires = {"openssl/3.4.1"}
     # default_user = "bigelderk"
     # default_channel = "default"
 
@@ -28,7 +29,18 @@ class BoostConan(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
         tc.cache_variables["CMAKE_USE_OPENSSL"] = False
-        tc.cache_variables["BUILD_TESTING"] = True
+        #tc.cache_variables["BUILD_TESTING"] = True
+
+        tc.cache_variables["BOOST_EXCLUDE_LIBRARIES"] = "process"
+
+        if self.settings.os == "Windows":
+            tc.cache_variables["CMAKE_CXX_FLAGS"] = "-D_WIN32_WINNT=0x0601 /EHsc /bigobj"
+
+        if self.settings.os == "Android":
+            tc.cache_variables["CMAKE_CXX_FLAGS"] = "-DDNO_WORDEXP -Wno-format-security -Wno-nonnull"
+            tc.cache_variables["CMAKE_C_FLAGS"] = "-DDNO_WORDEXP -Wno-format-security -Wno-nonnull"
+
+
         tc.generate()
     
     def build(self):
