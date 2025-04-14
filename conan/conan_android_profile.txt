@@ -13,7 +13,7 @@ build_type=Release
 [tool_requires]
 ninja/1.12.1
 cmake/3.31.6
-#llvm/20.1.1
+#llvm/20.1.1@arieo/dev
 #msvc/14.43.34808_x86_64
 #windows_sdk/10.0.26100.0_x86_64
 
@@ -26,7 +26,7 @@ tools.android:ndk_path=x:/conan/ndk/build/android-ndk-r27c
 tools.build:cxxflags=+["-Wno-format-security"]
 
 # For Debug
-#tools.build:cxxflags=+["-v"]
+tools.build:cxxflags=+["-v"]
 
 [buildenv]
 

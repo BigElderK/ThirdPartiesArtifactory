@@ -124,19 +124,18 @@ class LlvmConan(ConanFile):
         del self.info.settings.build_type
 
     def package_info(self):
-        self.cpp_info.includedirs = ['include']
-        self.cpp_info.libdirs = ['lib', "lib/x86_64-unknown-linux-gnu"]
-
+        #self.cpp_info.includedirs = ['include']
+        #self.cpp_info.libdirs = ['lib']
         self.cpp_info.bindirs = ['bin']
 
         #self.buildenv_info.prepend_path("LIBRARY_PATH", self.cpp_info.libdirs[0])
         #self.buildenv_info.prepend_path("LD_LIBRARY_PATH", self.cpp_info.libdirs[1])
         #self.buildenv_info.prepend_path("LD_PATH", self.cpp_info.bindirs[0])
  
-        self.runenv_info.prepend_path("LIBRARY_PATH", self.cpp_info.libdirs[0])
-        self.runenv_info.prepend_path("LD_LIBRARY_PATH", self.cpp_info.libdirs[1])
-        self.runenv_info.prepend_path("LD_PATH", self.cpp_info.bindirs[0])
-        self.runenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
+        #self.runenv_info.prepend_path("LIBRARY_PATH", self.cpp_info.libdirs[0])
+        #self.runenv_info.prepend_path("LD_LIBRARY_PATH", self.cpp_info.libdirs[1])
+        #self.runenv_info.prepend_path("LD_PATH", self.cpp_info.bindirs[0])
+        #self.runenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
         
         #self.runenv_info.define("CC", os.path.join(self.package_folder, "bin", "clang"))
         #self.runenv_info.define("CXX", os.path.join(self.package_folder, "bin", "clang++"))

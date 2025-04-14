@@ -12,8 +12,8 @@ build_type=Release
 [tool_requires]
 ninja/1.12.1
 cmake/3.31.6
-llvm/20.1.1
-raspberry64_sysroot/12.2.0
+llvm/20.1.1@arieo/dev
+raspberry64_sysroot/12.2.0@arieo/dev
 
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
@@ -23,13 +23,22 @@ tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "aarch64-linux-gnu"
 tools.build:cxxflags=+["-Wno-invalid-specialization"]
 
 # For Debug
-# tools.build:cxxflags=+["-v"]
+#tools.build:sysroot=E:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/sysroot
+#tools.build:cxxflags=+["-IE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/include/c++/12"]
+#tools.build:cflags=+["-IE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/include/c++/12"]
+#tools.build:cxxflags=+["-IE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/lib/include"]
+#tools.build:cflags=+["-IE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/lib/include"]
+#tools.build:exelinkflags=+["-LE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/sysroot/lib/aarch64-linux-gnu"]
+#tools.build:sharedlinkflags=+["-LE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/sysroot/lib/aarch64-linux-gnu"]
+#tools.build:cxxflags=+["-v"]
+
+#tools.build:cxxflags=+["-IE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/include/c++/12"]
+#tools.build:cflags=+["-IE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/include/c++/12"]
+
+#tools.build:exelinkflags=+["-LE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/lib"]
+#tools.build:sharedlinkflags=+["-LE:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/lib"]
 
 [buildenv]
-#CC=clang
-#CXX=clang++
-#LDFLAGS=-fuse-ld=lld -static-libstdc++ -lc++abi -lunwind
-#LDFLAGS=-lc++abi -lunwind
 
 [options]
 *:shared=False

@@ -7,7 +7,7 @@ arch=x86_64
 compiler=clang
 compiler.version=19
 compiler.libcxx=libc++
-compiler.cppstd=gnu17
+compiler.cppstd=20
 build_type=Release
 
 [tool_requires]
@@ -18,20 +18,19 @@ ubuntu_sysroot/24.10@arieo/dev
 
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
+tools.build:jobs=8
 tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
 tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "x86_64-linux-gnu", "CMAKE_CXX_COMPILER_TARGET":  "x86_64-linux-gnu", "CMAKE_C_COMPILER_TARGET": "x86_64-linux-gnu", "CMAKE_ASM_COMPILER_TARGET":"x86_64-linux-gnu", "CMAKE_LINKER_TYPE": "LLD"}
 
 tools.build:cxxflags=+["-Wno-invalid-specialization"]
 
 # For Debug
+#tools.build:sysroot=X:/conan/ubuntu_sysroot/build/ubuntu-24.10-x86_64/sysroot
 #tools.cmake.cmaketoolchain:extra_variables={"CMAKE_VERBOSE_MAKEFILE": "True"}
-tools.build:cxxflags=+["-v"]
+#tools.build:cxxflags=+["-v"]
+#tools.build:cflags=+["-v"]
 
 [buildenv]
-#CC=clang
-#CXX=clang++
-#LDFLAGS=-fuse-ld=lld -static-libstdc++ -lc++abi -lunwind
-#LDFLAGS=-lc++abi -lunwind
 
 [options]
 *:shared=False

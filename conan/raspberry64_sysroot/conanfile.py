@@ -34,6 +34,7 @@ class SysRootBinConan(ConanFile):
 
     def package(self):
         copy(self, "*", src=os.path.join(self.output_folder, "sysroot"), dst=os.path.join(self.package_folder, self.system_name, "sysroot"), keep_path=True)
+
         copy(self, "*", src=os.path.join(self.output_folder, "include"), dst=os.path.join(self.package_folder, self.system_name, "include"), keep_path=True)
         copy(self, "*", src=os.path.join(self.output_folder, "lib"), dst=os.path.join(self.package_folder, self.system_name, "lib"), keep_path=True)
         copy(self, "*", src=os.path.join(self.output_folder, "bin"), dst=os.path.join(self.package_folder, self.system_name, "bin"), keep_path=True)
@@ -41,10 +42,8 @@ class SysRootBinConan(ConanFile):
         return
 
     def package_info(self):
-        self.cpp_info.includedirs = [os.path.join(self.package_folder, self.system_name, "include")]
-        self.cpp_info.libdirs = [os.path.join(self.package_folder, self.system_name, "lib")]
-
         self.conf_info.define_path("tools.build:sysroot", os.path.join(self.package_folder, self.system_name, "sysroot"))
-        self.conf_info.append("tools.build:cxxflags", "-I" + os.path.join(self.package_folder, self.system_name, "include", "c++", "12").replace('\\', '/'))
 
+        # for abi and exception, etc
+        self.conf_info.append("tools.build:cxxflags", "-I" + os.path.join(self.package_folder, self.system_name, "include", "c++", "12").replace('\\', '/'))
         return
