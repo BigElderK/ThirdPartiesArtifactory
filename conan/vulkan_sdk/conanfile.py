@@ -49,10 +49,12 @@ class WindowsSDKConan(ConanFile):
         return
 
     def package_info(self):
-        self.cpp_info.components["vulkan"].includedirs = ['include']
+        self.cpp_info.components["vulkan"].includedirs = ['include', os.path.join('include', 'vulkan')]
         self.cpp_info.components["vulkan"].libdirs = ['lib']
         self.cpp_info.components["vulkan"].bindirs = ['bin', 'share']
 
-        self.cpp_info.components["vulkan"].libs = ["vulkan-1"]
-
+        if self.settings.os == "Linux":
+            self.cpp_info.components["vulkan"].libs = ["vulkan"]
+        if self.settings.os == "Windows":
+            self.cpp_info.components["vulkan"].libs = ["vulkan-1"]
         return
