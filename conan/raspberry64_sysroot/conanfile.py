@@ -34,7 +34,6 @@ class SysRootBinConan(ConanFile):
 
     def package(self):
         copy(self, "*", src=os.path.join(self.output_folder, "sysroot"), dst=os.path.join(self.package_folder, self.system_name, "sysroot"), keep_path=True)
-
         copy(self, "*", src=os.path.join(self.output_folder, "include"), dst=os.path.join(self.package_folder, self.system_name, "include"), keep_path=True)
         copy(self, "*", src=os.path.join(self.output_folder, "lib"), dst=os.path.join(self.package_folder, self.system_name, "lib"), keep_path=True)
         copy(self, "*", src=os.path.join(self.output_folder, "bin"), dst=os.path.join(self.package_folder, self.system_name, "bin"), keep_path=True)
@@ -46,4 +45,8 @@ class SysRootBinConan(ConanFile):
 
         # for abi and exception, etc
         self.conf_info.append("tools.build:cxxflags", "-I" + os.path.join(self.package_folder, self.system_name, "include", "c++", "12").replace('\\', '/'))
+
+        self.cpp_info.components["vulkan"].includedirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include"), os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include", "vulkan")]
+        self.cpp_info.components["vulkan"].libdirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", "aarch64-linux-gnu")]
+        self.cpp_info.components["vulkan"].libs = ["vulkan"]
         return
