@@ -37,4 +37,7 @@ class SysRootBinConan(ConanFile):
         self.cpp_info.includedirs = []
         self.cpp_info.libdirs = []
         self.conf_info.define_path("tools.android:ndk_path", os.path.join(self.package_folder, "android-ndk-r27c"))
+
+        # E:\BigElderK\ThirdPartiesArtifactory\conan\ndk\build\android-ndk-r27c\toolchains\llvm\prebuilt\windows-x86_64\sysroot\usr\include
+        # E:\BigElderK\ThirdPartiesArtifactory\conan\ndk\build\android-ndk-r27c\toolchains\llvm\prebuilt\windows-x86_64\sysroot\usr\lib\x86_64-linux-android\35
         return
