@@ -13,19 +13,21 @@ class SysRootBinConan(ConanFile):
     name = "ubuntu_sysroot"
     version = "24.10"
     topics = ("sysroot", "build", "installer")
-    settings = "arch"
+
+    options = {"system_triple": ["x86_64-linux-gnu"]}
     
     default_user = "arieo"
     default_channel = "dev"
 
+    def config_options(self):
+        self.options.system_triple = "x86_64-linux-gnu"
+    
     def layout(self):
-        self.system_name = f"ubuntu-{self.version}-{self.settings.arch}"
+        self.system_name = f"ubuntu-{self.version}-{self.options.system_triple}"
         self.docker_instance_name = f"conan-{self.system_name}"
         self.output_folder = os.path.join(".", "build")
 
         self.output_sysroot_folder = os.path.join(self.output_folder, self.system_name, "sysroot")
-
-        self.linux_arch_name = f"{self.settings.arch}-linux-gnu"
         return
 
     def source(self):
@@ -42,10 +44,10 @@ class SysRootBinConan(ConanFile):
         self.run(f"docker exec -it {self.docker_instance_name} apt upgrade -y")
         #self.run(f"docker exec -it {self.docker_instance_name} env DEBIAN_FRONTEND=\"noninteractive\" apt install -y build-essential clang lld ")
 
-        self.gcc_package_name = f"gcc-{self.settings.arch}-linux-gnu".replace('_', '-')
+        self.gcc_package_name = f"gcc-{self.options.system_triple}".replace('_', '-')
         self.run(f"docker exec -it {self.docker_instance_name} apt install -y libc6-dev libc++-dev libc++abi-dev {self.gcc_package_name}")
 
-        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"find /usr/lib/{self.linux_arch_name}/ -type l -xtype f > /tmp/file_links.txt\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"find /usr/lib/{self.options.system_triple}/ -type l -xtype f > /tmp/file_links.txt\"")
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/file_links.txt" + " -I{} readlink -f {} > /tmp/file_src.txt\"")
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"paste /tmp/file_src.txt /tmp/file_links.txt | xargs -n 2 cp -r --remove-destination\"")
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"paste /tmp/file_src.txt /tmp/file_links.txt | xargs -n 2 cp -r --remove-destination\"")

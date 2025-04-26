@@ -93,17 +93,17 @@ class LlvmConan(ConanFile):
             # tc.cache_variables["LLVM_STATIC_LINK_CXX_STDLIB"] = True
             # https://stackoverflow.com/questions/73679415/build-llvm-16-master-fail-on-libunwind
             #tc.cache_variables["BOOTSTRAP_STATIC_LINK_CXX_STDLIB"] = True
-            tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_PROJECTS"] = "bolt;clang;clang-tools-extra;lld;llvm;lldb;mlir;polly;pstl"
-            tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_RUNTIMES"] = "compiler-rt;libcxx"
+            #tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_PROJECTS"] = "bolt;clang;clang-tools-extra;lld;llvm;lldb;mlir;polly;pstl"
+            #tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_RUNTIMES"] = "compiler-rt;libcxx"
 
             #tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_INCREMENTAL_LINK"] = False
             #tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_EH"] = True
             #tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_RTTI"] = True
             
-            tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_LIBCXX"] = True
+            #tc.cache_variables["BOOTSTRAP_LLVM_ENABLE_LIBCXX"] = True
 
-            tc.cache_variables["BOOTSTRAP_LLVM_USE_CRT_RELEASE"] = "MT"
-            tc.cache_variables["BOOTSTRAP_LIBCXX_ENABLE_SHARED"] = False
+            #tc.cache_variables["BOOTSTRAP_LLVM_USE_CRT_RELEASE"] = "MT"
+            #tc.cache_variables["BOOTSTRAP_LIBCXX_ENABLE_SHARED"] = False
 
             #tc.cache_variables["BOOTSTRAP_LIBCXXABI_USE_LLVM_UNWINDER"] = False
 
