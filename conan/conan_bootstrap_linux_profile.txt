@@ -13,3 +13,7 @@ cmake/3.31.6
 
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
+
+[options]
+fPIC=True
+shared=False

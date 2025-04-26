@@ -17,3 +17,7 @@ tools.apple:sdk_path=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 
 [buildenv]
 SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+
+[options]
+fPIC=True
+shared=False
