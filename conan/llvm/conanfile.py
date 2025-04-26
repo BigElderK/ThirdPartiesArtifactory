@@ -67,6 +67,14 @@ class LlvmConan(ConanFile):
 
             tc.cache_variables["LIBUNWIND_LINK_FLAGS"] ="-ldl -lpthread"
 
+        if self.settings.os == "Macos":
+            tc.cache_variables["LLVM_ENABLE_PROJECTS"] = "clang;clang-tools-extra;lld;llvm;lldb;polly;pstl"
+            tc.cache_variables["LLVM_ENABLE_RUNTIMES"] = "compiler-rt;libcxx;libcxxabi;libunwind"
+            tc.cache_variables["LLVM_ENABLE_PIC"] = "ON"
+            tc.cache_variables["LLDB_USE_SYSTEM_DEBUGSERVER"] = "ON"
+            tc.cache_variables["LIBCXXABI_USE_LLVM_UNWINDER"] = "OFF"
+            
+
         if self.settings.os == "Windows":
             tc.cache_variables["LLVM_ENABLE_PROJECTS"] = "clang;clang-tools-extra;lld;llvm;lldb;polly;pstl"
             tc.cache_variables["LLVM_ENABLE_RUNTIMES"] = "compiler-rt;libcxx"
@@ -136,7 +144,7 @@ class LlvmConan(ConanFile):
         #self.runenv_info.prepend_path("LD_LIBRARY_PATH", self.cpp_info.libdirs[1])
         #self.runenv_info.prepend_path("LD_PATH", self.cpp_info.bindirs[0])
         #self.runenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
-        
-        #self.runenv_info.define("CC", os.path.join(self.package_folder, "bin", "clang"))
-        #self.runenv_info.define("CXX", os.path.join(self.package_folder, "bin", "clang++"))
+        #if self.settings.os == "Linux" or self.settings.os == "Linux":
 
+        self.buildenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
+        self.buildenv_info.define("LLVM_ROOT", os.path.join(self.package_folder))
