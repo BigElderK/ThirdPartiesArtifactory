@@ -19,9 +19,14 @@ class SysRootBinConan(ConanFile):
     default_user = "arieo"
     default_channel = "dev"
 
+    options = {"system_triple": ["aarch64-linux-gnu"]}
+
+    def config_options(self):
+        self.options.system_triple = "aarch64-linux-gnu"
+
     def layout(self):
         self.system_name = f"raspberray64-armv8"
-        self.output_folder = "./build/aarch64-linux-gnu"
+        self.output_folder = f"./build/{self.options.system_triple}"
         return
 
     def source(self):
@@ -47,6 +52,6 @@ class SysRootBinConan(ConanFile):
         self.conf_info.append("tools.build:cxxflags", "-I" + os.path.join(self.package_folder, self.system_name, "include", "c++", "12").replace('\\', '/'))
 
         self.cpp_info.components["vulkan"].includedirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include"), os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include", "vulkan")]
-        self.cpp_info.components["vulkan"].libdirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", "aarch64-linux-gnu")]
+        self.cpp_info.components["vulkan"].libdirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", str(self.options.system_triple))]
         self.cpp_info.components["vulkan"].libs = ["vulkan"]
         return
