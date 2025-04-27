@@ -74,13 +74,14 @@ class SysRootBinConan(ConanFile):
         self.cpp_info.includedirs = []
         self.cpp_info.libdirs = []
 
+        self.system_name = f"ubuntu-{self.version}-{self.options.system_triple}"
         self.conf_info.define_path("tools.build:sysroot", os.path.join(self.package_folder, self.system_name, "sysroot"))
 
         # for cxxabi, libuwind
         self.conf_info.append("tools.build:cxxflags", f"-I" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", "llvm-19", "include").replace('\\', '/'))
 
         # for libc++.so, etc automatically
-        # self.conf_info.append("tools.build:exelinkflags", f"-L" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", f"{self.linux_arch_name}").replace('\\', '/'))
-        # self.conf_info.append("tools.build:sharedlinkflags", f"-L" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", f"{self.linux_arch_name}").replace('\\', '/'))
+        # self.conf_info.append("tools.build:exelinkflags", f"-L" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", f"{self.options.system_triple}").replace('\\', '/'))
+        # self.conf_info.append("tools.build:sharedlinkflags", f"-L" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", f"{self.options.system_triple}").replace('\\', '/'))
         
         return
