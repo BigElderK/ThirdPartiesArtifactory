@@ -46,11 +46,18 @@ class SysRootBinConan(ConanFile):
 
         self.gcc_package_name = f"gcc-{self.options.system_triple}".replace('_', '-')
         self.run(f"docker exec -it {self.docker_instance_name} apt install -y libc6-dev libc++-dev libc++abi-dev {self.gcc_package_name}")
+        self.run(f"docker exec -it {self.docker_instance_name} apt install -y rsync")
 
-        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"find /usr/lib/{self.options.system_triple}/ -type l -xtype f > /tmp/file_links.txt\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"find /usr/ -type l -xtype f > /tmp/file_links.txt\"")
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/file_links.txt" + " -I{} readlink -f {} > /tmp/file_src.txt\"")
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"paste /tmp/file_src.txt /tmp/file_links.txt | xargs -n 2 cp -r --remove-destination\"")
-        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"paste /tmp/file_src.txt /tmp/file_links.txt | xargs -n 2 cp -r --remove-destination\"")
+
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"find /usr/ -type l -xtype d > /tmp/folder_links.txt\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/folder_links.txt" + " -I{} readlink -f {} > /tmp/folder_src.txt\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/folder_links.txt" + " -I{} echo {}/ > /tmp/folder_links_s.txt\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/folder_src.txt" + " -I{} echo {}/ > /tmp/folder_src_s.txt\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/folder_links.txt" + " -I{} rm {}\"")
+        self.run(f"docker exec -it {self.docker_instance_name} sh -c \"paste /tmp/folder_src_s.txt /tmp/folder_links_s.txt | xargs -n 2 rsync -a\"")
 
         if not os.path.exists(self.output_sysroot_folder):
             os.makedirs(self.output_sysroot_folder)
