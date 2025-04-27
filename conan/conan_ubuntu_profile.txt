@@ -5,7 +5,7 @@ os=Linux
 arch=x86_64
 
 compiler=clang
-compiler.version=19
+compiler.version=20
 compiler.libcxx=libc++
 compiler.cppstd=20
 build_type=Release
@@ -16,22 +16,19 @@ cmake/3.31.6
 llvm/20.1.1@arieo/dev
 ubuntu_sysroot/24.10@arieo/dev
 
+[options]
+ubuntu_sysroot/*:system_triple=x86_64-linux-gnu
+*:shared=False
+*:fPIC=True
+
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
 tools.build:jobs=8
-tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
+#tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
 tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "x86_64-linux-gnu", "CMAKE_CXX_COMPILER_TARGET":  "x86_64-linux-gnu", "CMAKE_C_COMPILER_TARGET": "x86_64-linux-gnu", "CMAKE_ASM_COMPILER_TARGET":"x86_64-linux-gnu", "CMAKE_LINKER_TYPE": "LLD"}
 
-tools.build:cxxflags=+["-Wno-invalid-specialization"]
+tools.build:cxxflags=+["-Wno-invalid-partial-specialization"]
+tools.build:cflags=+["-Wno-invalid-partial-specialization"]
 
 # For Debug
-#tools.build:sysroot=X:/conan/ubuntu_sysroot/build/ubuntu-24.10-x86_64/sysroot
-#tools.cmake.cmaketoolchain:extra_variables={"CMAKE_VERBOSE_MAKEFILE": "True"}
-#tools.build:cxxflags=+["-v"]
-#tools.build:cflags=+["-v"]
-
-[buildenv]
-
-[options]
-*:shared=False
-*:fPIC=True
+tools.build:cxxflags=+["-v"]

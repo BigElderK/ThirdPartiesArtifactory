@@ -148,5 +148,5 @@ class LlvmConan(ConanFile):
         #self.runenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
         #if self.settings.os == "Linux" or self.settings.os == "Linux":
 
-        self.buildenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
-        self.buildenv_info.define("LLVM_ROOT", os.path.join(self.package_folder))
+        self.runenv_info.prepend_path("PATH", self.cpp_info.bindirs[0])
+        self.runenv_info.define("LLVM_ROOT", os.path.join(self.package_folder))

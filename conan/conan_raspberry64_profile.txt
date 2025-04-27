@@ -5,8 +5,8 @@ os=Linux
 arch=armv8
 
 compiler=clang
-compiler.version=19
-compiler.cppstd=gnu17
+compiler.version=20
+compiler.cppstd=20
 build_type=Release
 
 [tool_requires]
@@ -17,10 +17,10 @@ raspberry64_sysroot/12.2.0@arieo/dev
 
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
-tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
+#tools.build:compiler_executables = {"c": "clang", "cpp": "clang++"}
 tools.cmake.cmaketoolchain:extra_variables={"TARGET_TRIPLE": "aarch64-linux-gnu", "CMAKE_CXX_COMPILER_TARGET":  "aarch64-linux-gnu", "CMAKE_C_COMPILER_TARGET": "aarch64-linux-gnu", "CMAKE_ASM_COMPILER_TARGET":"aarch64-linux-gnu", "CMAKE_LINKER_TYPE": "LLD"}
 
-tools.build:cxxflags=+["-Wno-invalid-specialization"]
+tools.build:cxxflags=+["-Wno-invalid-partial-specialization"]
 
 # For Debug
 #tools.build:sysroot=E:/BigElderK/ThirdPartiesArtifactory/conan/raspberry64_sysroot/build/aarch64-linux-gnu/sysroot
