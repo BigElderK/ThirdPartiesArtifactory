@@ -11,7 +11,7 @@ import glob
 import platform
 
 class NDKSysrootConan(ConanFile):
-    name = "ndk_libs"
+    name = "android_sysroot"
     version = "27.2.12479018"
     topics = ("sysroot")
         
