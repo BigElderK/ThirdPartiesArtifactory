@@ -13,7 +13,7 @@ import glob
 class WindowsSDKConan(ConanFile):
     name = "vulkan_sdk"
     version = "1.4.309.0"
-    settings = "os", "arch", "build_type"
+    settings = "os", "arch"
 
     def layout(self):
         self.sdk_install_root_folder = os.path.join(".", "build", str(self.settings.os), str(self.settings.arch), str(self.version))
@@ -52,9 +52,12 @@ class WindowsSDKConan(ConanFile):
         self.cpp_info.components["vulkan"].includedirs = ['include', os.path.join('include', 'vulkan')]
         self.cpp_info.components["vulkan"].libdirs = ['lib']
         self.cpp_info.components["vulkan"].bindirs = ['bin', 'share']
+        self.cpp_info.components["vulkan"].builddirs = ['lib']
 
         if self.settings.os == "Linux":
             self.cpp_info.components["vulkan"].libs = ["vulkan"]
         if self.settings.os == "Windows":
             self.cpp_info.components["vulkan"].libs = ["vulkan-1"]
+        if self.settings.os == "Macos":
+            self.cpp_info.components["vulkan"].libs = ["vulkan"]
         return
