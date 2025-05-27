@@ -38,15 +38,16 @@ class SysRootBinConan(ConanFile):
         return
     
     def build(self):        
-        self.run(f"docker rm -f {self.docker_instance_name}")
-        self.run(f"docker run -d --name {self.docker_instance_name} ubuntu:{self.version} tail -f /dev/null")
-        self.run(f"docker exec -it {self.docker_instance_name} apt update -y")
-        self.run(f"docker exec -it {self.docker_instance_name} apt upgrade -y")
+        self.run(f"docker rm -f {self.docker_instance_name}") 
+        self.run(f"docker run -d --name {self.docker_instance_name} ubuntu:{self.version} tail -f /dev/null") 
+        self.run(f"docker exec -it {self.docker_instance_name} apt update -y") 
+        self.run(f"docker exec -it {self.docker_instance_name} apt upgrade -y") 
         #self.run(f"docker exec -it {self.docker_instance_name} env DEBIAN_FRONTEND=\"noninteractive\" apt install -y build-essential clang lld ")
 
         self.gcc_package_name = f"gcc-{self.options.system_triple}".replace('_', '-')
         self.run(f"docker exec -it {self.docker_instance_name} apt install -y libc6-dev libc++-dev libc++abi-dev {self.gcc_package_name}")
         self.run(f"docker exec -it {self.docker_instance_name} apt install -y rsync")
+        self.run(f"docker exec -it {self.docker_instance_name} apt install -y libx11-dev")
 
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"find /usr/ -type l -xtype f > /tmp/file_links.txt\"")
         self.run(f"docker exec -it {self.docker_instance_name} sh -c \"xargs -a /tmp/file_links.txt" + " -I{} readlink -f {} > /tmp/file_src.txt\"")
@@ -90,5 +91,8 @@ class SysRootBinConan(ConanFile):
         # for libc++.so, etc automatically
         # self.conf_info.append("tools.build:exelinkflags", f"-L" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", f"{self.options.system_triple}").replace('\\', '/'))
         # self.conf_info.append("tools.build:sharedlinkflags", f"-L" + os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", f"{self.options.system_triple}").replace('\\', '/'))
-        
+
+        self.cpp_info.components["X11"].includedirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include")]
+        self.cpp_info.components["X11"].libdirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", str(self.options.system_triple))]
+        self.cpp_info.components["X11"].libs = ["X11"]
         return
