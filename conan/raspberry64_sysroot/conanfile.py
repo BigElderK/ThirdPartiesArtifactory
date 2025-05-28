@@ -54,4 +54,8 @@ class SysRootBinConan(ConanFile):
         self.cpp_info.components["vulkan"].includedirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include"), os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include", "vulkan")]
         self.cpp_info.components["vulkan"].libdirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", str(self.options.system_triple))]
         self.cpp_info.components["vulkan"].libs = ["vulkan"]
+        
+        self.cpp_info.components["X11"].includedirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include"), os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "include")]
+        self.cpp_info.components["X11"].libdirs = [os.path.join(self.package_folder, self.system_name, "sysroot", "usr", "lib", str(self.options.system_triple))]
+        self.cpp_info.components["X11"].libs = ["X11"]        
         return
