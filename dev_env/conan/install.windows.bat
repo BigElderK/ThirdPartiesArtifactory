@@ -1,0 +1,11 @@
+@echo off
+set DEV_ENV_CONAN_ROOT_PATH=%~dp0
+
+:: https://stackoverflow.com/questions/69719363/httpsconnectionpool-error-when-trying-to-install-gtest-with-conan
+:: https://github.com/conan-io/conan/issues/9695
+:: conan config install https://github.com/conan-io/conanclientcert.git
+conan profile detect --force
+conan install %DEV_ENV_CONAN_ROOT_PATH%\conanfile.txt --update --generator CMakeToolchain --output-folder %DEV_ENV_CONAN_ROOT_PATH%\_generated\host\windows --build never --profile=%DEV_ENV_CONAN_ROOT_PATH%\profiles\host\conan_host_profile.windows.txt
+conan install %DEV_ENV_CONAN_ROOT_PATH%\conanfile.txt --update --generator CMakeToolchain --output-folder %DEV_ENV_CONAN_ROOT_PATH%\_generated\host\ubuntu --build never --profile=%DEV_ENV_CONAN_ROOT_PATH%\profiles\host\conan_host_profile.ubuntu.txt
+conan install %DEV_ENV_CONAN_ROOT_PATH%\conanfile.txt --update --generator CMakeToolchain --output-folder %DEV_ENV_CONAN_ROOT_PATH%\_generated\host\android --build never --profile=%DEV_ENV_CONAN_ROOT_PATH%\profiles\host\conan_host_profile.android.txt
+conan install %DEV_ENV_CONAN_ROOT_PATH%\conanfile.txt --update --generator CMakeToolchain --output-folder %DEV_ENV_CONAN_ROOT_PATH%\_generated\host\raspberry64 --build never --profile=%DEV_ENV_CONAN_ROOT_PATH%\profiles\host\conan_host_profile.raspberry64.txt
