@@ -21,6 +21,12 @@ class glfw3Conan(ConanFile):
 
     generators = "CMakeDeps"
     
+    #def requirements(self):
+        #if self.settings.os in ["Linux", "FreeBSD"]:
+            #self.requires("xorg/system")
+            #self.requires("wayland/1.22.0")
+            #self.requires("xkbcommon/1.6.0")
+        
     def layout(self):
         cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
 
@@ -29,8 +35,8 @@ class glfw3Conan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.cache_variables["GLFW_BUILD_WAYLAND"] = False
-        tc.cache_variables["GLFW_BUILD_X11"] = False
+        #tc.cache_variables["GLFW_BUILD_WAYLAND"] = False
+        #tc.cache_variables["GLFW_BUILD_X11"] = True
         tc.generate()
 
     def build(self):
@@ -45,4 +51,7 @@ class glfw3Conan(ConanFile):
         return
 
     def package_info(self):
+        self.cpp_info.includedirs = ['include']
+        self.cpp_info.libdirs = ['lib']
+        self.libs = ['glfw3']
         return
