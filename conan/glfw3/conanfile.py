@@ -53,5 +53,5 @@ class glfw3Conan(ConanFile):
     def package_info(self):
         self.cpp_info.includedirs = ['include']
         self.cpp_info.libdirs = ['lib']
-        self.libs = ['glfw3']
+        self.cpp_info.libs = ['glfw3']
         return
