@@ -54,4 +54,10 @@ class glfw3Conan(ConanFile):
         self.cpp_info.includedirs = ['include']
         self.cpp_info.libdirs = ['lib']
         self.cpp_info.libs = ['glfw3']
+
+        if self.settings.os == "Macos":
+            self.cpp_info.frameworks.extend([
+                "AppKit", "Cocoa", "CoreFoundation", "CoreGraphics",
+                "CoreServices", "Foundation", "IOKit",
+            ])        
         return
