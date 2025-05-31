@@ -14,10 +14,10 @@ build_type=Release
 #ninja/1.12.1
 #cmake/3.31.6
 #llvm/20.1.1@arieo/dev
-#ubuntu_sysroot/24.10@arieo/dev
+ubuntu_sysroot/24.10@arieo/dev
 
 [options]
-#ubuntu_sysroot/*:system_triple=x86_64-linux-gnu
+ubuntu_sysroot/*:system_triple=x86_64-linux-gnu
 *:shared=False
 *:fPIC=True
 

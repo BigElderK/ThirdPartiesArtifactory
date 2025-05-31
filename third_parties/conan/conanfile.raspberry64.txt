@@ -15,3 +15,7 @@ concurrentqueue/1.0.4
 
 [generators]
 CMakeConfigDeps
+
+[options]
+easyloggingpp/*:enable_crash_log=True
+easyloggingpp/*:enable_default_logfile=False

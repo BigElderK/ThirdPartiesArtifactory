@@ -10,10 +10,14 @@ yaml-cpp/0.8.0
 boost/1.87.0@arieo/dev
 vulkan_sdk/1.4.309.0@arieo/dev
 ubuntu_sysroot/24.10@arieo/dev
-glfw/3.4
+glfw/3.4@arieo/dev
 
 concurrentqueue/1.0.4
 #onetbb/2022.0.0
 
 [generators]
 CMakeConfigDeps
+
+[options]
+easyloggingpp/*:enable_crash_log=True
+easyloggingpp/*:enable_default_logfile=False
