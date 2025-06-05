@@ -60,4 +60,6 @@ class WindowsSDKConan(ConanFile):
             self.cpp_info.components["vulkan"].libs = ["vulkan-1"]
         if self.settings.os == "Macos":
             self.cpp_info.components["vulkan"].libs = ["vulkan"]
+
+        self.runenv_info.define("VK_LAYER_PATH", os.path.join(self.package_folder, "bin"))
         return
