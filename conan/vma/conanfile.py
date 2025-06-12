@@ -7,7 +7,7 @@ from conan.tools.files import rmdir
 from conan.tools.files import copy
 import os
 
-class glfw3Conan(ConanFile):
+class VmaConan(ConanFile):
     name = "vma"
     version = "3.3.0"
     #license = "<Put the package license here>"

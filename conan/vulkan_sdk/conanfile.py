@@ -10,7 +10,7 @@ import tarfile
 import os
 import glob
 
-class WindowsSDKConan(ConanFile):
+class VulkanSDKConan(ConanFile):
     name = "vulkan_sdk"
     version = "1.4.309.0"
     settings = "os", "arch"
