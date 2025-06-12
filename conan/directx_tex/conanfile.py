@@ -21,16 +21,26 @@ class FreeImageConan(ConanFile):
         return
     
     def build(self):
-        if self.settings.os == "Linux":
-            get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-Linux-no-deps.tar.bz2" % (self.version, self.version), destination="bin")
         if self.settings.os == "Windows":
             get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-Windows.zip" % (self.version, self.version), destination="bin")
+        if self.settings.os == "Linux":
+            get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-Linux-no-deps.tar.bz2" % (self.version, self.version), destination="bin")
+            os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texconv"), 0o755) 
+            os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texassemble"), 0o755) 
         if self.settings.os == "Macos":
             get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-macOS-no-deps.tar.bz2" % (self.version, self.version), destination="bin")
+            os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texconv"), 0o755) 
+            os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texassemble"), 0o755) 
         
 
     def package(self):
-        copy(self, '*', src=os.path.join(self.build_folder, "bin"), dst=os.path.join(self.package_folder, "bin"))
+        if self.settings.os == "Linux":
+            copy(self, '*', src=os.path.join(self.build_folder, "bin", "TexconvCustomDLL"), dst=os.path.join(self.package_folder, "bin"))
+        if self.settings.os == "Windows":
+            copy(self, '*', src=os.path.join(self.build_folder, "bin"), dst=os.path.join(self.package_folder, "bin"))
+        if self.settings.os == "Macos":
+            copy(self, '*', src=os.path.join(self.build_folder, "bin", "TexconvCustomDLL"), dst=os.path.join(self.package_folder, "bin"))
+        
 
     def package_info(self):
         self.cpp_info.bindirs = ['bin']
