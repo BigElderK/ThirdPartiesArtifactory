@@ -31,7 +31,7 @@ class TinyObjLoaderConan(ConanFile):
         cmake_layout(self, src_folder="./source", build_folder=os.path.join("./build", str(self.settings.os), str(self.settings.arch)))
 
     def source(self):
-        self.run("git clone https://github.com/microsoft/DirectXShaderCompiler.git --branch v%s" % (self.version))
+        self.run("git clone --recursive https://github.com/microsoft/DirectXShaderCompiler.git --branch v%s" % (self.version))
 
     def generate(self):
         tc = CMakeToolchain(self)
@@ -39,7 +39,7 @@ class TinyObjLoaderConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(build_script_folder="./DirectXShaderCompiler")
+        cmake.configure(build_script_folder="./DirectXShaderCompiler", cli_args=["-C %s/DirectXShaderCompiler/cmake/caches/PredefinedParams.cmake" % (self.source_folder)])
         cmake.build()
         return
         
@@ -52,5 +52,4 @@ class TinyObjLoaderConan(ConanFile):
         self.cpp_info.includedirs = ['include']
         self.cpp_info.libdirs = ['lib']
         self.cpp_info.libs = ['tinyobjloader']
-      
         return
