@@ -24,11 +24,11 @@ class FreeImageConan(ConanFile):
         if self.settings.os == "Windows":
             get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-Windows.zip" % (self.version, self.version), destination="bin")
         if self.settings.os == "Linux":
-            get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-Linux-no-deps.tar.bz2" % (self.version, self.version), destination="bin")
+            get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-Linux.tar.bz2" % (self.version, self.version), destination="bin")
             os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texconv"), 0o755) 
             os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texassemble"), 0o755) 
         if self.settings.os == "Macos":
-            get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-macOS-no-deps.tar.bz2" % (self.version, self.version), destination="bin")
+            get(self, url = "https://github.com/matyalatte/Texconv-Custom-DLL/releases/download/v%s/TexconvCustomDLL-v%s-macOS.tar.bz2" % (self.version, self.version), destination="bin")
             os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texconv"), 0o755) 
             os.chmod(os.path.join(self.build_folder, "bin", "TexconvCustomDLL", "texassemble"), 0o755) 
         
