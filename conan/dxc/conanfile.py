@@ -4,6 +4,7 @@ from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps, cmake_layout
 from conan.tools.scm import Git
 from conan.tools.files import rmdir
+from conan.tools.files import copy
 import os
 
 class TinyObjLoaderConan(ConanFile):
@@ -44,8 +45,7 @@ class TinyObjLoaderConan(ConanFile):
         return
         
     def package(self):
-        cmake = CMake(self)
-        cmake.install()
+        copy(self, "*", src=os.path.join(self.build_folder, "bin"), dst=os.path.join(self.package_folder, "bin"), keep_path=True)
         return
     
     def package_id(self):
