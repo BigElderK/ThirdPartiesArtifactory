@@ -47,9 +47,13 @@ class TinyObjLoaderConan(ConanFile):
         cmake = CMake(self)
         cmake.install()
         return
+    
+    def package_id(self):
+        del self.info.settings.compiler
+        del self.info.settings.build_type
+        del self.info.options.shared
+        del self.info.options.fPIC
 
     def package_info(self):
-        self.cpp_info.includedirs = ['include']
-        self.cpp_info.libdirs = ['lib']
-        self.cpp_info.libs = ['tinyobjloader']
+        self.cpp_info.bindirs = ['bin']
         return
