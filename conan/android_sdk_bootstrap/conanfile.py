@@ -33,8 +33,8 @@ class NDKToolChainConan(ConanFile):
         return
 
     def package_info(self):
-        self.cpp_info.bindirs = [os.path.join(self.package_folder, "AndroidSDK", "cmdline-tools", "bootstrap", "bin")]
-        self.runenv_info.define("ANDROID_SDK_ROOT", os.path.join(self.package_folder, "AndroidSDK"))
+        # self.cpp_info.bindirs = [os.path.join(self.package_folder, "AndroidSDK", "cmdline-tools", "bootstrap", "bin")]
+        self.runenv_info.define("ANDROID_SDK_BOOTSTRAP_ROOT", os.path.join(self.package_folder, "AndroidSDK"))
 
         
 
