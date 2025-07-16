@@ -24,9 +24,9 @@ class VmaConan(ConanFile):
         tc.generate()
 
     def build(self):
-        cmake = CMake(self)
-        cmake.configure(build_script_folder="./vma")
-        cmake.build()
+        # cmake = CMake(self)
+        # cmake.configure(build_script_folder="./VulkanMemoryAllocator")
+        # cmake.build()
         return
         
     def package(self):
