@@ -12,8 +12,8 @@ class MiMallocConan(ConanFile):
     version = "3.1.5"
     settings = "os", "arch", "build_type"
 
-    options = {"fPIC": [True, False], "secure": [True, False]}
-    default_options = {"fPIC": True, "secure": False}
+    options = {"shared": [True, False], "fPIC": [True, False], "secure": [True, False]}
+    default_options = {"shared": False, "fPIC": True, "secure": False}
     
     # default_user = "bigelderk"
     # default_channel = "default"
@@ -26,8 +26,10 @@ class MiMallocConan(ConanFile):
         
     def generate(self):
         tc = CMakeToolchain(self)
+        tc.cache_variables["MI_BUILD_STATIC"] = "ON"
         if self.options.secure == True:
             tc.cache_variables["MI_SECURE"] = "ON"
+        tc.generate()
     
     def build(self):
         if self.settings.os == "Windows":
@@ -48,10 +50,12 @@ class MiMallocConan(ConanFile):
         else:
             cmake = CMake(self)
             cmake.install()
+            copy(self, "*", src=os.path.join(self.package_folder, "lib", "mimalloc-3.1"), dst=os.path.join(self.package_folder, "lib"), keep_path=True)
 
     def package_info(self):
-        self.cpp_info.includedirs = []
-        self.cpp_info.libdirs = []
+        self.cpp_info.includedirs = ['include']
+        self.cpp_info.libdirs = ['lib']
+        self.cpp_info.libs = ['mimalloc']
 
         #self.runenv_info.append_path(os.path.join(self.package_folder, "bin"))
         #self.runenv_info.append_path("PATH", os.path.join(self.package_folder, "bin"))
