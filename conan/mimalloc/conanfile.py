@@ -46,14 +46,14 @@ class MiMallocConan(ConanFile):
     def package(self):
         if self.settings.os == "Windows":
             copy(self, "*", src=os.path.join(self.build_folder, "lib"), dst=os.path.join(self.package_folder, "lib"), keep_path=True)
-            copy(self, "*", src=os.path.join(self.build_folder, "include"), dst=os.path.join(self.package_folder, "include"), keep_path=True)
+            copy(self, "*", src=os.path.join(self.build_folder, "include"), dst=os.path.join(self.package_folder, "include", "mimalloc-3.1"), keep_path=True)
         else:
             cmake = CMake(self)
             cmake.install()
             copy(self, "*", src=os.path.join(self.package_folder, "lib", "mimalloc-3.1"), dst=os.path.join(self.package_folder, "lib"), keep_path=True)
 
     def package_info(self):
-        self.cpp_info.includedirs = ['include']
+        self.cpp_info.includedirs = [os.path.join('include', 'mimalloc-3.1')]
         self.cpp_info.libdirs = ['lib']
         self.cpp_info.libs = ['mimalloc']
 
