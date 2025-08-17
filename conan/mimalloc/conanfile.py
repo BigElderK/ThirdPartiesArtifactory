@@ -55,9 +55,9 @@ class MiMallocConan(ConanFile):
         if self.options.secure == True:
             tc.cache_variables["MI_SECURE"] = "ON"
 
-        if self.settings.os != "Windows":
-            tc.cache_variables["CMAKE_C_FLAGS"] = "-ftls-model=global-dynamic"
-            tc.cache_variables["CMAKE_CXX_FLAGS"] = "-ftls-model=global-dynamic"
+        # if self.settings.os != "Windows":
+        #     tc.cache_variables["CMAKE_C_FLAGS"] = "-ftls-model=global-dynamic"
+        #     tc.cache_variables["CMAKE_CXX_FLAGS"] = "-ftls-model=global-dynamic"
         tc.generate()
     
     def build(self):
